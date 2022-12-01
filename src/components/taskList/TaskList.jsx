@@ -1,7 +1,16 @@
+import axios from "axios";
 import React from "react";
 import { RiDeleteBinFill } from "react-icons/ri";
 
-const TaskList = ({ task }) => {
+const TaskList = ({ task, getTask }) => {
+  const deleteText = async (id) => {
+    const url = "https://6351820cdfe45bbd55c21ad8.mockapi.io/api/task";
+    try {
+      await axios.delete(`${url}/${id}`);
+    } catch (error) {}
+    getTask();
+  };
+
   return (
     <div>
       {task.map((item) => {
@@ -17,6 +26,7 @@ const TaskList = ({ task }) => {
             </div>
             <div>
               <RiDeleteBinFill
+                onClick={() => deleteText(id)}
                 style={{
                   cursor: "pointer",
                   marginRigth: "20px",
